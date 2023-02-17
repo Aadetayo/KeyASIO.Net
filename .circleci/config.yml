@@ -1,14 +1,18 @@
----
 version: 2.1
 jobs:
-  build:
-    docker:
-      - image: mcr.microsoft.com/dotnet/sdk:5.0
-  steps:
-    - checkout
-    - run:
-        name: Restore dependencies
-        command: dotnet restore
-    - run:
-        name: Build
-        command: dotnet build --configuration Release
+    build:
+        docker:
+            - image: mcr.microsoft.com/dotnet/sdk:5.0
+        steps:
+            - checkout
+            - run:
+                name: Restore dependencies
+                command: dotnet restore
+            - run:
+                name: Build
+                command: dotnet build --configuration Release
+workflows:
+  jjbuild:
+    jobs:
+      - build
+   
