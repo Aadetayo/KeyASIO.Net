@@ -7,10 +7,15 @@ jobs:
             - checkout
             - run:
                 name: Restore dependencies
-                command: dotnet restore
+                command: dotnet restore KeyAsio.Gui
             - run:
                 name: Build
                 command: dotnet build --configuration Release
+            - run: |
+                echo ${{ github.ref }}      
+                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x64 --self-contained --configuration Release --output ci-publish-win64
+                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x86 --self-contained --configuration Release --output ci-publish-win32
+                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
 workflows:
   jjbuild:
     jobs:
