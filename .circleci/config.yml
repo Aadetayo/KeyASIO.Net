@@ -1,25 +1,34 @@
 version: 2.1
+
+orbs:
+  dotnet: circleci/dotnet@0.0.12
+
 jobs:
-    build:
-        docker:
-            - image: mcr.microsoft.com/dotnet/sdk:latest
-                environment:
-                    ENV: mcr.microsoft.com/windows:ltsc2019
-        steps:
-            - checkout
-            - run:
-                name: Restore dependencies
-                command: dotnet restore KeyAsio.Gui
-            - run:
-                name: Build
-                command: dotnet build --configuration Release
-            - run: |
-                echo ${{ github.ref }}      
-                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x64 --self-contained --configuration Release --output ci-publish-win64
-                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x86 --self-contained --configuration Release --output ci-publish-win32
-                dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
+  build:
+    executor: dotnet/default
+    environment:
+      DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    steps:
+      - checkout
+      - dotnet/install-sdk:
+          version: '6.0'
+      - run:
+          name: Restore dependencies
+          command: dotnet restore KeyAsio.Gui
+      - run:
+          name: Build
+          command: dotnet build --configuration Release
+      - run:
+          name: Publish for Windows
+          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x64 --self-contained --configuration Release --output ci-publish-win64
+      - run:
+          name: Publish for Windows 32-bit
+          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x86 --self-contained --configuration Release --output ci-publish-win32
+      - run:
+          name: Publish for all platforms
+          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
+
 workflows:
-  jjbuild:
+  build:
     jobs:
       - build
-   
