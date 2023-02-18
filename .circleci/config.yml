@@ -3,25 +3,27 @@ jobs:
     build:
         docker:
             - image: mcr.microsoft.com/windows:ltsc2019
-    steps:
-      - checkout
-      - run:
-          name: Restore dependencies
-          command: dotnet restore KeyAsio.Gui
-      - run:
-          name: Build
-          command: dotnet build --configuration Release
-      - run:
-          name: Publish for Windows
-          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x64 --self-contained --configuration Release --output ci-publish-win64
-      - run:
-          name: Publish for Windows 32-bit
-          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x86 --self-contained --configuration Release --output ci-publish-win32
-      - run:
-          name: Publish for all platforms
-          command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
+        steps:
+            - checkout
+            - run:
+                name: Restore dependencies
+                command: dotnet restore KeyAsio.Gui
+            - run:
+                name: Build
+                command: dotnet build --configuration Release
+            - run:
+                name: Publish for Windows
+                command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x64 --self-contained --configuration Release --output ci-publish-win64
+            - run:
+                name: Publish for Windows 32-bit
+                command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --runtime win-x86 --self-contained --configuration Release --output ci-publish-win32
+            - run:
+                name: Publish for all platforms
+                command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
 
 workflows:
-  build:
+  jjbuild:
     jobs:
       - build
+
+   
