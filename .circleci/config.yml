@@ -3,8 +3,6 @@ orbs:
   windows: circleci/windows@5.0.0
 jobs:
     build:
-        docker:
-            - image: mcr.microsoft.com/dotnet/sdk:latest
         executor:
             name: win/default
         steps:
