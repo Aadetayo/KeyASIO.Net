@@ -5,8 +5,6 @@ jobs:
             - image: mcr.microsoft.com/windows:ltsc2019
     steps:
       - checkout
-      - dotnet/install-sdk:
-          version: '6.0'
       - run:
           name: Restore dependencies
           command: dotnet restore KeyAsio.Gui
