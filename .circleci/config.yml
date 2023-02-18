@@ -5,6 +5,7 @@ jobs:
     build:
         executor:
             name: win/server-2022
+            size: medium
         steps:
             - checkout
             - run:
