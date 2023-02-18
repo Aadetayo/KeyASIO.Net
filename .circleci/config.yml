@@ -22,7 +22,7 @@ jobs:
                 command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
 
 workflows:
-  jjbuild:
+  jbuild:
     jobs:
       - build
 
