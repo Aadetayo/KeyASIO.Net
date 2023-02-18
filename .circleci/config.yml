@@ -3,8 +3,8 @@ jobs:
     build:
         docker:
             - image: mcr.microsoft.com/dotnet/sdk:latest
-            environment:
-                name: mcr.microsoft.com/windows:ltsc2019
+                environment:
+                    name: mcr.microsoft.com/windows:ltsc2019
         steps:
             - checkout
             - run:
