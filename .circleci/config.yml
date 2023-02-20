@@ -1,10 +1,12 @@
 version: 2.1
 jobs:
     build:
-        docker:
-            - image: microsoft/dotnet:sdk
+        executor: windows/default
         steps:
             - checkout
+            - run: 
+                name: install dotnet sdk 6
+                command: choco install dotnet-sdk --version 6.0.100
             - run:
                 name: Restore dependencies
                 command: dotnet restore KeyAsio.Gui
@@ -22,7 +24,7 @@ jobs:
                 command: dotnet publish KeyAsio.Gui --no-restore --framework net6.0-windows --configuration Release --output ci-publish
 
 workflows:
-  jbuild:
+  jjbuild:
     jobs:
       - build
 
