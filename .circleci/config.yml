@@ -4,8 +4,7 @@ orbs:
   
 jobs:
     build:
-        executor: 
-            name: win/server-2022
+        executor: windows/server-2019-cuda
         steps:
             - checkout
             - run: 
